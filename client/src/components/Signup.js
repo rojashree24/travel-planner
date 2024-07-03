@@ -20,7 +20,7 @@ const Signup = () => {
       });
       // console.log(response.data); 
     } catch (err) {
-      setError(err.response.data.message);
+      setError(err);
     }
     navigate('/dashboard')
   };
