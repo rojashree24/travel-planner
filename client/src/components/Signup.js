@@ -13,12 +13,12 @@ const Signup = () => {
   const handleSignup = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:5000/signup", {
+      await axios.post("http://localhost:5000/signup", {
         username,
         email,
         password,
       });
-      console.log(response.data); 
+      // console.log(response.data); 
     } catch (err) {
       setError(err.response.data.message);
     }
