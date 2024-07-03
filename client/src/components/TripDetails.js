@@ -1,3 +1,65 @@
+
+
+
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { useParams } from "react-router-dom";
+
+function TripDetails() {
+  const { id } = useParams();
+  const [trip, setTrip] = useState(null);
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    const fetchTrip = async () => {
+      try {
+        const response = await axios.get(`http://localhost:5000/trips/${id}`);
+        setTrip(response.data);
+      } catch (error) {
+        setError("Error fetching trip details");
+        console.error(error);
+      }
+    };
+
+    fetchTrip();
+  }, [id]);
+
+  if (error) {
+    return <p>{error}</p>;
+  }
+
+  if (!trip) {
+    return <p>Loading...</p>;
+  }
+
+  return (
+    <div className="trip-details">
+      <h2>Trip Details</h2>
+      <h3>
+        {trip.start} to {trip.destination}
+      </h3>
+      <p>
+        Dates: {trip.startDate} - {trip.endDate}
+      </p>
+      <p>Mode of Travel: {trip.modeOfTravel}</p>
+      <p>Notes: {trip.notes}</p>
+      <div>
+        <strong>Activities:</strong>
+        <ul>
+          {trip.activities.map((activity, index) => (
+            <li key={index}>
+              {activity.date} - {activity.time}: {activity.description}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  );
+}
+
+export default TripDetails;
+
+
 // import React,{useState,useEffect} from 'react'
 // import axios from "axios";
 // import { useParams, useNavigate } from "react-router-dom";
@@ -122,62 +184,3 @@
 // }
 
 // export default TripDetails
-
-
-import React, { useEffect, useState } from "react";
-import axios from "axios";
-import { useParams } from "react-router-dom";
-
-function TripDetails() {
-  const { id } = useParams();
-  const [trip, setTrip] = useState(null);
-  const [error, setError] = useState("");
-
-  useEffect(() => {
-    const fetchTrip = async () => {
-      try {
-        const response = await axios.get(`http://localhost:5000/trips/${id}`);
-        setTrip(response.data);
-      } catch (error) {
-        setError("Error fetching trip details");
-        console.error(error);
-      }
-    };
-
-    fetchTrip();
-  }, [id]);
-
-  if (error) {
-    return <p>{error}</p>;
-  }
-
-  if (!trip) {
-    return <p>Loading...</p>;
-  }
-
-  return (
-    <div className="trip-details">
-      <h2>Trip Details</h2>
-      <h3>
-        {trip.start} to {trip.destination}
-      </h3>
-      <p>
-        Dates: {trip.startDate} - {trip.endDate}
-      </p>
-      <p>Mode of Travel: {trip.modeOfTravel}</p>
-      <p>Notes: {trip.notes}</p>
-      <div>
-        <strong>Activities:</strong>
-        <ul>
-          {trip.activities.map((activity, index) => (
-            <li key={index}>
-              {activity.date} - {activity.time}: {activity.description}
-            </li>
-          ))}
-        </ul>
-      </div>
-    </div>
-  );
-}
-
-export default TripDetails;
