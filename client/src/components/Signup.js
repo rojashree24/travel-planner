@@ -13,7 +13,7 @@ const Signup = () => {
   const handleSignup = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:5000/signup", {
+      await axios.post("https://travel-plan-90gw.onrender.com/signup", {
         username,
         email,
         password,
