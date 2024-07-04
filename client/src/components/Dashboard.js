@@ -10,7 +10,9 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchTrips = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/trips`);
+        const response = await axios.get(
+          `https://travel-plan-90gw.onrender.com/trips`
+        );
         if (Array.isArray(response.data)) {
           setTrips(response.data);
         } else {
